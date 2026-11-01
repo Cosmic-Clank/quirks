@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Falling Sand</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
+    /* The canvas has one pixel per cell and gets stretched up. pixelated keeps
+       each cell a crisp square instead of a blur. touch-action: none lets a
+       finger pour instead of scrolling the page. */
+    canvas { display: block; image-rendering: pixelated; touch-action: none; cursor: crosshair; }
+
+    /* ---- Control bar, floating at the top (sand piles up at the bottom) ---- */
+    .bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      top: 12px;
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 10px;
+      padding: 10px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .tip { width: 100%; margin: 0; text-align: center; color: #888; }
+    button {
+      padding: 6px 12px;
+      font: inherit;
+      color: inherit;
+      background: #0e1117;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { border-color: #888; }
+    /* The material you're painting with */
+    button[aria-pressed="true"] { color: #0e1117; background: #dbb85c; border-color: #dbb85c; }
+    label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    input { margin: 0; accent-color: #dbb85c; }
+    input[type="range"] { width: 90px; }
+  </style>
+</head>
+<body>
+  <canvas id="box"></canvas>
+
+  <div class="bar">
+    <p class="tip">Hold to pour. Sand sinks through water.</p>
+    <!-- data-material numbers match EMPTY, SAND, WATER and WALL in sand.js -->
+    <button type="button" data-material="1" aria-pressed="true">Sand</button>
+    <button type="button" data-material="2" aria-pressed="false">Water</button>
+    <button type="button" data-material="3" aria-pressed="false">Wall</button>
+    <button type="button" data-material="0" aria-pressed="false">Eraser</button>
+    <label>Brush <input type="range" id="brush" min="1" max="12" value="4"></label>
+    <label><input type="checkbox" id="colorful"> Colorful</label>
+    <button type="button" id="clear">Clear</button>
+  </div>
+
+  <script src="sand.js"></script>
+</body>
+</html>

@@ -168,6 +168,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">05</span><span>Simulation</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="sand/" tabindex="-1">
+              <img src="sand/preview.webp" width="1100" height="688" alt="A stream of sand pouring onto a big pile striped in wavy rainbow layers">
+            </a>
+            <div class="quirk-intro">
+              <h3>Falling sand</h3>
+              <p class="subtitle">Every grain looks down</p>
+              <p>Pour sand and water, draw walls, and watch it all pile up and slosh around. Turn on Colorful and the sand comes out in rainbow bands. Each grain follows a couple of tiny rules about the cells just below it, and that's enough to feel real.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="sand/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="sand-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="sand-more" hidden>
+            <div>
+              <p>Falling sand toys are an internet classic, and they're hard to put down. There's no physics engine and no gravity formula. The screen is a grid, and each grain only ever looks at the few cells right underneath it. Yet piles form slopes, water spreads out flat, and sand sinks to the bottom of a pool.</p>
+              <p>Like the Game of Life, it's a <strong>cellular automaton</strong>: every cell follows the same small rules, and only cares about its neighbours. The difference is that here, the cells are moving stuff around instead of being born and dying.</p>
+              <p>Try this: turn on Colorful and pour while slowly moving side to side. Every band of color is a moment in time, so the pile ends up layered like real rock. Or draw a funnel out of walls, fill a cup with water and pour sand in, or knock out the bottom of a pile with the eraser.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>The screen is a grid of tiny cells, each holding empty space, sand, water or wall. Sixty times a second, going from the bottom row up, every grain tries:</p>
+              <ol class="rules">
+                <li><strong>Fall</strong> If the cell below is empty, move into it.</li>
+                <li><strong>Slide</strong> Otherwise, try down-left or down-right. The side is picked at random so piles grow evenly.</li>
+                <li><strong>Flow</strong> Water that still can't move tries left or right. That's what lets it spread out flat.</li>
+              </ol>
+              <p>Sand is heavier, so it can also swap places with water below it, slowly, which makes it sink. Every grain carries its own color as it moves, which is how Colorful's rainbow bands stay in place. To draw, the grid becomes a tiny image with one pixel per cell, stretched up to fill the screen.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -177,8 +212,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>
