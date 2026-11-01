@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rain</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    canvas { display: block; }
+
+    /* ---- Settings panel ---- */
+    .panel {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      width: 230px;
+      padding: 6px 12px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .panel summary { padding: 4px 0; cursor: pointer; }
+    /* Name and number on one line, control underneath */
+    .panel label { display: grid; grid-template-columns: 1fr auto; margin-top: 10px; }
+    .panel input, .panel select { grid-column: 1 / -1; width: 100%; margin: 4px 0 0; }
+    .panel input { accent-color: #b07cf0; }
+    .panel select {
+      padding: 4px 6px;
+      font: inherit;
+      color: inherit;
+      background: #0e1117;
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+
+    /* Phones: stretch the panel along the bottom, where a thumb can reach it */
+    @media (max-width: 500px) {
+      .panel { top: auto; bottom: 12px; left: 12px; width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sky"></canvas>
+
+  <!-- Each slider's name matches a key in `settings` in rain.js. value="" is its starting value. -->
+  <details class="panel" id="panel" open>
+    <summary>Settings</summary>
+    <label>Colors
+      <select id="theme">
+        <option value="purple">Purple rain</option>
+        <option value="ocean">Ocean</option>
+        <option value="midnight">Midnight</option>
+        <option value="ink">Ink</option>
+      </select>
+    </label>
+    <label>Amount <output></output>
+      <input type="range" name="amount" min="50" max="1500" step="50" value="500">
+    </label>
+    <label>Speed <output></output>
+      <input type="range" name="speed" min="0.2" max="3" step="0.1" value="1">
+    </label>
+    <label>Wind <output></output>
+      <input type="range" name="wind" min="-1" max="1" step="0.05" value="0">
+    </label>
+  </details>
+
+  <script src="rain.js"></script>
+</body>
+</html>

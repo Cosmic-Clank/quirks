@@ -132,6 +132,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">04</span><span>Simulation</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="rain/" tabindex="-1">
+              <img src="rain/preview.webp" width="1100" height="688" alt="Purple raindrops of different lengths falling across a light lavender sky">
+            </a>
+            <div class="quirk-intro">
+              <h3>Rain</h3>
+              <p class="subtitle">Depth from nothing but speed</p>
+              <p>Drops falling from the sky in purple, blue, or black and yellow. Close drops are long and fast, far ones short and slow, and that alone makes a flat screen feel deep. Change the amount, speed and wind.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="rain/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="rain-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="rain-more" hidden>
+            <div>
+              <p>"Purple rain" is a classic first project in creative coding: a lavender sky with violet drops falling through it. It's about as simple as an animation gets, just a few hundred lines sliding down the screen.</p>
+              <p>The interesting part is the depth. Everything is drawn on a flat screen, yet some drops look far away and some look close. That's <strong>parallax</strong>: things near you seem to move faster than things far away. It's why the fence by the road whips past a car window while the mountains behind it barely move. Your brain reads speed and size as distance, so that's all the drops need.</p>
+              <p>Try this: push the wind all the way and the rain slants into a storm. Turn the amount up to the max, or switch to Midnight for black and yellow.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>Each drop is just three numbers: <strong>x</strong>, <strong>y</strong>, and a depth <strong>z</strong> between 0 (far back) and 1 (right in front). Every frame:</p>
+              <ol class="rules">
+                <li><strong>Depth decides the look</strong> A drop's length, speed, thickness and opacity all grow with z. Far drops end up short, slow, thin and faint.</li>
+                <li><strong>Fall</strong> Move down by its speed, and sideways by speed × wind. Movement is scaled by the time since the last frame, so it falls at the same rate on any screen.</li>
+                <li><strong>Recycle</strong> A drop that falls off the bottom starts again just above the top, with a new random depth. One blown off a side wraps to the other.</li>
+              </ol>
+              <p>No 3D at all. One number per drop that makes the close ones bigger and faster is the whole trick.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -141,8 +176,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>

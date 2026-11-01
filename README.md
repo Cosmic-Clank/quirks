@@ -11,6 +11,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 | [Boids](boids/) | A flock of birds following three simple rules. Move your mouse through them, or tweak the rules with the sliders. |
 | [ASCII video](ascii-video/) | Turns a video or your camera into moving ASCII art, live in the browser. Pick a character set, add color, save a frame. |
 | [Game of Life](game-of-life/) | Cells live or die by counting their neighbours. Draw your own patterns and watch them grow. |
+| [Rain](rain/) | Drops falling at different depths, in purple, blue, or black and yellow. Change the amount, speed and wind. |
 
 ## Running it locally
 
@@ -32,6 +33,7 @@ favicon.svg, fonts/      shared by the home page
 boids/                   one folder per quirk
 ascii-video/
 game-of-life/
+rain/
 ```
 
 Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder. The `preview.webp` inside is only for the home page.
