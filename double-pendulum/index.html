@@ -51,12 +51,27 @@
 
   <details class="panel" id="panel" open>
     <summary>Settings</summary>
-    <p>Each pendulum starts just 0.06° apart from the next.</p>
-    <label>Pendulums <output id="count-value">8</output>
+    <label>Pendulums <output id="count-value"></output>
       <input type="range" id="count" min="1" max="50" value="8">
     </label>
+
+    <!-- Starting angles: 0° hangs straight down, 180° points straight up -->
+    <label>Top arm <output id="top-angle-value"></output>
+      <input type="range" id="top-angle" min="0" max="180" value="150">
+    </label>
+    <label>Bottom arm <output id="bottom-angle-value"></output>
+      <input type="range" id="bottom-angle" min="0" max="180" value="165">
+    </label>
+
+    <!-- Each notch makes the gap between pendulums 10 times smaller -->
+    <label>Offset <output id="offset-value"></output>
+      <input type="range" id="offset" min="-4" max="0" step="1" value="-1">
+    </label>
+    <p>How far apart each pendulum starts from the next.</p>
+
     <label class="check"><input type="checkbox" id="trails" checked> Trails</label>
     <button type="button" id="restart">Restart</button>
+    <button type="button" id="random">Random</button>
   </details>
 
   <script src="pendulum.js"></script>

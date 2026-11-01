@@ -17,7 +17,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 | [Falling sand](sand/) | Pour sand and water, draw walls, and watch it all pile up and slosh around. Turn on Colorful for rainbow sand. |
 | [Chaos game](chaos-game/) | Jump halfway toward a random corner, over and over, and a fractal appears out of the noise. |
 | [Cloth](cloth/) | Pull, cut and tear a sheet of fabric made of points and little sticks. |
-| [Double pendulum](double-pendulum/) | A rainbow of pendulums start a hair apart, swing together, then fly apart. Chaos you can watch. |
+| [Double pendulum](double-pendulum/) | A rainbow of pendulums start a hair apart, swing together, then fly apart. Set the starting angles and how far apart they start. |
 | [Drawing with circles](circles/) | Draw any shape, and a chain of spinning circles draws it back. A Fourier transform you can play with. |
 
 ## Running it locally

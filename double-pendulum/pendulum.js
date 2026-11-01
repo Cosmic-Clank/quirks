@@ -9,11 +9,17 @@ const ctx = canvas.getContext("2d");
 const panel = document.getElementById("panel");
 const countSlider = document.getElementById("count");
 const countValue = document.getElementById("count-value");
+const topSlider = document.getElementById("top-angle");
+const topValue = document.getElementById("top-angle-value");
+const bottomSlider = document.getElementById("bottom-angle");
+const bottomValue = document.getElementById("bottom-angle-value");
+const offsetSlider = document.getElementById("offset");
+const offsetValue = document.getElementById("offset-value");
 const trailsToggle = document.getElementById("trails");
 
 // Both arms are 1 unit long, so this is like 1-meter arms on Earth.
 const GRAVITY = 9.81;
-const NUDGE = 0.001; // how far apart the pendulums start, in radians (about 0.06°)
+const DEGREES = Math.PI / 180; // multiply degrees by this to get radians, which the math uses
 const STEP = 1 / 600; // seconds per physics step. Small steps keep the swinging accurate.
 const TRAIL = 120; // how many recent positions of each bottom weight to draw
 const BACKGROUND = "#0e1117";
@@ -47,16 +53,32 @@ function resize() {
 	armLength = Math.min(width, height) * 0.21;
 }
 
-// Start them all over from a new random spot, high up so it gets wild.
+// The Offset slider is the number of zeros: 0 means 1°, -1 means 0.1°, and
+// -4 means 0.0001°. Each notch makes the gap 10 times smaller.
+function offsetDegrees() {
+	return 10 ** Number(offsetSlider.value);
+}
+
+// Show each setting's value next to its slider.
+function showSettings() {
+	countValue.textContent = countSlider.value;
+	topValue.textContent = `${topSlider.value}°`;
+	bottomValue.textContent = `${bottomSlider.value}°`;
+	offsetValue.textContent = `${offsetDegrees()}°`;
+}
+
+// Start them all over from the angles on the sliders, with each pendulum's
+// top arm nudged by the offset a little further than the one before it.
 function restart() {
 	const count = Number(countSlider.value);
-	const angle1 = Math.PI / 2 + Math.random() * (Math.PI / 2); // between 90° and 180°
-	const angle2 = Math.PI / 2 + Math.random() * (Math.PI / 2);
+	const angle1 = Number(topSlider.value) * DEGREES;
+	const angle2 = Number(bottomSlider.value) * DEGREES;
+	const offset = offsetDegrees() * DEGREES;
 
 	pendulums = [];
 	for (let k = 0; k < count; k++) {
 		pendulums.push({
-			angle1: angle1 + k * NUDGE, // each one nudged a tiny bit further than the last
+			angle1: angle1 + k * offset,
 			angle2,
 			speed1: 0,
 			speed2: 0,
@@ -187,11 +209,24 @@ function frame(now) {
 }
 
 // --- Controls -------------------------------------------------------------
-countSlider.addEventListener("input", () => {
-	countValue.textContent = countSlider.value;
+// Changing any setting starts the pendulums over with it.
+for (const slider of [countSlider, topSlider, bottomSlider, offsetSlider]) {
+	slider.addEventListener("input", () => {
+		showSettings();
+		restart();
+	});
+}
+
+document.getElementById("restart").addEventListener("click", restart);
+
+// Random: pick two new starting angles high up (90° to 180°), where it gets wild.
+document.getElementById("random").addEventListener("click", () => {
+	topSlider.value = 90 + Math.floor(Math.random() * 91);
+	bottomSlider.value = 90 + Math.floor(Math.random() * 91);
+	showSettings();
 	restart();
 });
-document.getElementById("restart").addEventListener("click", restart);
+
 window.addEventListener("resize", () => {
 	resize();
 	for (const p of pendulums) p.trail = []; // old trails were drawn at the old size
@@ -199,6 +234,7 @@ window.addEventListener("resize", () => {
 
 // --- Start ----------------------------------------------------------------
 resize();
+showSettings();
 restart();
 // Start with the panel folded away on small screens, so the pendulums are visible
 if (width < 600) panel.open = false;
