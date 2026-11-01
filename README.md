@@ -4,7 +4,7 @@ Little simulations, toys and tools, written in plain HTML, CSS and JavaScript.
 
 No frameworks, no build step, nothing to install. Every quirk is a small page you can open, play with, and read the source of. The code is commented so you can follow along.
 
-This is a just-for-fun project, and it's vibe coded. Whenever I want to learn how something works, I build a little quirk around it with an AI pair programmer and put it here. Don't expect polish, just curiosity.
+This is a just-for-fun project where I learn by building. It's part handwritten, part vibe coded: I write code myself, and I use AI to explain things, fill in gaps and help me figure out how stuff works. Whenever something clicks, it becomes a quirk and goes up here. Don't expect polish, just curiosity.
 
 | Quirk | What it does |
 | --- | --- |
