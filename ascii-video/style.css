@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-/* Header on top, and <main> takes up all the remaining height. main.js
+/* Header on top, and <main> takes up all the remaining height. ascii.js
    measures <main> to work out how big the ASCII can be.
    dvh is the height you can actually see, without a phone's address bar. */
 body {
@@ -96,7 +96,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px; /* main.js counts on this being 16px (MAIN_PADDING) */
+  padding: 16px; /* ascii.js counts on this being 16px (MAIN_PADDING) */
   overflow: hidden;
 }
 

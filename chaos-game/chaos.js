@@ -155,7 +155,11 @@ function showSpeed() {
 }
 speedSlider.addEventListener("input", showSpeed);
 
-window.addEventListener("resize", resize);
+// A new screen size starts over with a triangle in the new middle.
+window.addEventListener("resize", () => {
+	resize();
+	makeShape(3);
+});
 
 // --- Start ----------------------------------------------------------------
 resize();

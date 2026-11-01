@@ -52,7 +52,7 @@ Each quirk folder stands on its own. It has its own `index.html` and its own sty
 
 ## Adding a quirk
 
-1. Make a folder named after it, e.g. `sand/`, with an `index.html` inside. Put the CSS and JS in that page, or next to it as separate files, whichever reads better.
+1. Make a folder named after it, e.g. `magnets/`, with an `index.html` inside. Put the CSS and JS in that page, or next to it as separate files, whichever reads better.
 2. Take a screenshot of it doing something nice, at 1100 × 688, and save it in the folder as `preview.webp`.
 3. On the home page (`index.html`), copy one of the `<article class="quirk">` boxes and fill it in: the next number, a label (Simulation, Toy, Tool...), the screenshot, a name and subtitle, and a short description. Underneath goes the longer write-up that "Read more" opens: the idea and why it's interesting on the left, and how it works "under the hood" on the right. Give the write-up its own `id`, and put that id in the button's `aria-controls`.
 4. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
@@ -63,6 +63,8 @@ A few rules keep things easy to read:
 - **Nothing leaves the page.** No CDNs, trackers or uploads. Anything a quirk needs lives in its folder.
 - **Comment the why.** Write as if the reader is new to it: what a trick does and why it's needed, not just what the line says.
 - **Small and focused.** One idea per quirk. Named constants at the top for the numbers worth tweaking.
+- **Same speed on any screen.** Move things by how much time has passed, not by how many frames, so a 120Hz screen doesn't run twice as fast.
+- **Works on phones.** Use pointer events so a finger works like a mouse, and let the controls fold away or wrap on small screens.
 
 ## License
 

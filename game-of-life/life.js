@@ -95,15 +95,22 @@ function draw() {
 }
 
 // --- Main loop ------------------------------------------------------------
-let lastStep = 0;
+let lastTime = performance.now();
+let owed = 0; // generations we still owe since the last frame
 
 function frame(now) {
-	// Step at the slider's speed (generations per second), however fast the
-	// screen refreshes: only step once enough time has passed.
-	if (running && now - lastStep >= 1000 / speedSlider.value) {
-		step();
+	// Speed is in generations per second, so it's the same on any screen.
+	// Capped so coming back to a hidden tab doesn't run hundreds at once.
+	owed += (Number(speedSlider.value) * Math.min(now - lastTime, 100)) / 1000;
+	lastTime = now;
+	if (!running) owed = 0;
+
+	if (owed >= 1) {
+		while (owed >= 1) {
+			step();
+			owed--;
+		}
 		draw();
-		lastStep = now;
 	}
 	requestAnimationFrame(frame);
 }
@@ -112,18 +119,25 @@ function frame(now) {
 let painting = false;
 let paintValue = 1;
 
-function paint(e) {
+// The index of the cell under the pointer, or -1 if it's off the grid
+// (a drag can carry on past the edge of the screen).
+function cellAt(e) {
 	const x = Math.floor(e.clientX / CELL);
 	const y = Math.floor(e.clientY / CELL);
-	cells[y * cols + x] = paintValue;
+	if (x < 0 || y < 0 || x >= cols || y >= rows) return -1;
+	return y * cols + x;
+}
+
+function paint(e) {
+	const i = cellAt(e);
+	if (i === -1) return;
+	cells[i] = paintValue;
 	draw();
 }
 
 canvas.addEventListener("pointerdown", (e) => {
 	// Start on a dead cell to draw, or on a live one to erase.
-	const x = Math.floor(e.clientX / CELL);
-	const y = Math.floor(e.clientY / CELL);
-	paintValue = cells[y * cols + x] ? 0 : 1;
+	paintValue = cells[cellAt(e)] ? 0 : 1;
 	painting = true;
 	paint(e);
 });

@@ -1,8 +1,14 @@
-// Flock simulation: separation, alignment and cohesion.
+// Flock simulation. Every bird follows three simple rules about the birds
+// near it: don't crowd them (separation), head the same way (alignment), and
+// stay close (cohesion). Nobody tells them to flock, but they do.
 
 // --- Setup (like pygame.display.set_mode) -------------------------------
 const canvas = document.getElementById("sky");
 const ctx = canvas.getContext("2d"); // the "surface" we draw on
+
+const BACKGROUND = "#0e1117";
+const BIRD_COLOR = "#7dd3fc";
+const MOUSE_RADIUS = 100; // how far the mouse's push reaches, in pixels
 
 // Screen size in CSS pixels. The rest of the code uses these, not canvas.width.
 let width = 0;
@@ -23,8 +29,6 @@ function resize() {
 }
 window.addEventListener("resize", resize);
 resize();
-
-const MOUSE_RADIUS = 100;
 
 // --- Settings panel -------------------------------------------------------
 // Each slider has a name, like name="speed". readSliders() copies its value
@@ -208,7 +212,7 @@ class Bird {
 		ctx.lineTo(-5, 4); // back-left
 		ctx.lineTo(-5, -4); // back-right
 		ctx.closePath();
-		ctx.fillStyle = "#7dd3fc";
+		ctx.fillStyle = BIRD_COLOR;
 		ctx.fill();
 
 		ctx.restore();
@@ -235,7 +239,7 @@ function frame(now) {
 	birds.length = settings.count;
 
 	// Clear the screen (like screen.fill(...))
-	ctx.fillStyle = "#0e1117";
+	ctx.fillStyle = BACKGROUND;
 	ctx.fillRect(0, 0, width, height);
 
 	// Faint ring showing the mouse's push radius

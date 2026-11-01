@@ -1,4 +1,8 @@
-// ASCII video: turns a video or your camera into moving text art.
+// ASCII video: turns a video or your camera into moving text art. Every
+// character is a little patch of ink, so lining characters up from least ink
+// to most gives a brightness scale made of text. Each frame, the video is
+// shrunk to one pixel per character, and each pixel becomes the character
+// that matches its brightness.
 
 const fileInput = document.getElementById("file-input");
 const cameraButton = document.getElementById("camera-button");
