@@ -419,11 +419,6 @@ footer {
   color: var(--muted);
   border-top: var(--border);
 }
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-}
 .back-to-top {
   padding: 0.45rem 0.8rem;
   white-space: nowrap;
