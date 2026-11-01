@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASCII Video</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="controls">
+    <div class="group">
+      <label class="button">
+        Video file
+        <input type="file" id="file-input" accept="video/*" hidden>
+      </label>
+      <button type="button" id="camera-button" class="button">Camera</button>
+      <button type="button" id="pause-button" class="button" disabled>Play</button>
+      <button type="button" id="save-button" class="button" disabled>Save</button>
+    </div>
+
+    <div class="group">
+      <label>
+        Characters
+        <select id="charset-select">
+          <option value="detailed">Detailed</option>
+          <option value="simple">Simple</option>
+          <option value="binary">Binary</option>
+        </select>
+      </label>
+      <label>
+        Detail
+        <input type="range" id="detail-slider" min="40" max="240" step="10" value="120">
+        <output id="detail-value">120</output>
+      </label>
+      <label><input type="checkbox" id="color-toggle"> Color</label>
+      <label><input type="checkbox" id="invert-toggle"> Invert</label>
+    </div>
+
+    <p id="message" role="status"></p>
+  </header>
+
+  <main>
+    <p id="hint">Choose a video file or turn on your camera.<br>It all happens in your browser. Nothing gets uploaded.</p>
+
+    <!-- The real video plays here, invisibly. It's just our frame source. -->
+    <video id="video" playsinline loop></video>
+
+    <!-- Tiny canvas we draw each frame onto, then read the pixels back from. Never shown. -->
+    <canvas id="tiny" hidden></canvas>
+
+    <!-- The big visible canvas we draw the ASCII characters onto. -->
+    <canvas id="display" hidden></canvas>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

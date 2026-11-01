@@ -9,7 +9,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 | Quirk | What it does |
 | --- | --- |
 | [Boids](boids/) | A flock of birds following three simple rules. Move your mouse through them, or tweak the rules with the sliders. |
-| [ASCII video](ascii/) | Turns a video or your camera into moving ASCII art, live in the browser. |
+| [ASCII video](ascii-video/) | Turns a video or your camera into moving ASCII art, live in the browser. Pick a character set, add color, save a frame. |
 
 ## Running it locally
 
@@ -29,7 +29,7 @@ uv run python -m http.server
 index.html, style.css   the home page with a card for each quirk
 favicon.svg, fonts/      shared by the home page
 boids/                   one folder per quirk
-ascii/
+ascii-video/
 ```
 
 Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder.

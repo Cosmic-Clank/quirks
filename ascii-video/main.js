@@ -1,18 +1,24 @@
+// ASCII video: turns a video or your camera into moving text art.
+
 const fileInput = document.getElementById("file-input");
 const cameraButton = document.getElementById("camera-button");
 const pauseButton = document.getElementById("pause-button");
-const widthSlider = document.getElementById("width-slider");
-const widthValue = document.getElementById("width-value");
+const saveButton = document.getElementById("save-button");
+const charsetSelect = document.getElementById("charset-select");
+const detailSlider = document.getElementById("detail-slider");
+const detailValue = document.getElementById("detail-value");
 const colorToggle = document.getElementById("color-toggle");
+const invertToggle = document.getElementById("invert-toggle");
 const message = document.getElementById("message");
+const hint = document.getElementById("hint");
 const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
+const tiny = document.getElementById("tiny");
 const display = document.getElementById("display");
 const main = document.querySelector("main");
 
 // willReadFrequently tells the browser we'll read pixels back every frame,
 // so it keeps the canvas in regular memory instead of on the GPU.
-const ctx = canvas.getContext("2d", { willReadFrequently: true });
+const tinyCtx = tiny.getContext("2d", { willReadFrequently: true });
 
 // The visible canvas. We only draw onto this one, never read from it.
 const displayCtx = display.getContext("2d");
@@ -22,12 +28,14 @@ const FONT = '"Courier New", Consolas, monospace';
 // Text color in monochrome mode.
 const MONO_COLOR = "#eee";
 
-// Our "ramp": characters ordered from darkest to brightest. On a black
-// background a space is darkest (nothing drawn) and '$' is brightest (lots of ink).
-// This is Paul Bourke's well-known 70-character ramp, flipped to go dark-to-bright.
-// More steps means smoother shading. If it looks too noisy, try the short one:
-// const RAMP = " .:-=+*#%@";
-const RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+// Character sets, ordered from darkest to brightest. On a black background a
+// space is darkest (nothing drawn) and the last character is brightest (lots of ink).
+const CHARSETS = {
+	// Paul Bourke's well-known 70-character ramp, flipped to go dark-to-bright.
+	detailed: " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
+	simple: " .:-=+*#%@",
+	binary: " 01",
+};
 
 // <main> has 16px padding on each side, so we lose 32px of space in each direction.
 const MAIN_PADDING = 32;
@@ -38,16 +46,10 @@ const MAIN_PADDING = 32;
 displayCtx.font = `100px ${FONT}`;
 const CHAR_ASPECT = displayCtx.measureText("M").width / 100;
 
-// How many characters across each ASCII frame is. Controlled by the slider.
-let columns = Number(widthSlider.value);
-
 // Size of one character "cell" on the display canvas, in CSS pixels.
 // resize() works these out.
 let cellWidth = 0;
 let cellHeight = 0;
-
-// Draw each character in its pixel's real color?
-let colorMode = colorToggle.checked;
 
 // The live camera stream, when the camera is on. null otherwise.
 let stream = null;
@@ -55,6 +57,8 @@ let stream = null;
 // Flip the picture left-to-right? We do this for the camera so it acts like a
 // mirror. Without it, raising your right hand looks like raising your left.
 let mirrored = false;
+
+// --- Video sources --------------------------------------------------------
 
 // Turn off the camera (its light goes off too) and detach it from the video.
 function stopCamera() {
@@ -71,21 +75,119 @@ function stopFile() {
 	video.removeAttribute("src");
 }
 
-// Size both canvases for the current column count and video shape, so the
-// whole ASCII picture fits on screen.
+// Some browsers block playing a video with sound until you press something.
+// If that happens, play() fails, the video waits paused, and Play starts it.
+function play() {
+	video.play().catch(() => {});
+}
+
+fileInput.addEventListener("change", () => {
+	const file = fileInput.files[0];
+	if (!file) return;
+
+	stopCamera();
+	stopFile();
+	message.textContent = "";
+
+	// Turn the picked file into a temporary URL the <video> element can play.
+	video.src = URL.createObjectURL(file);
+	mirrored = false;
+	play();
+
+	// Clear the picker, so choosing the same file again still counts as a change.
+	fileInput.value = "";
+});
+
+cameraButton.addEventListener("click", async () => {
+	try {
+		// Asks the user for permission the first time. `await` pauses here until
+		// they answer. If they say no (or there's no camera), it throws.
+		// facingMode "user" means the front camera on phones.
+		const newStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+
+		stopCamera();
+		stopFile();
+		message.textContent = "";
+
+		// A live stream goes in srcObject, not src: it isn't a file with a URL.
+		stream = newStream;
+		video.srcObject = stream;
+		mirrored = true;
+		play();
+	} catch (err) {
+		message.textContent = `Couldn't open the camera: ${err.message}`;
+	}
+});
+
+video.addEventListener("error", () => {
+	message.textContent = "Couldn't play that video. Try a different file.";
+});
+
+// --- Buttons and settings -------------------------------------------------
+
+pauseButton.addEventListener("click", () => {
+	if (video.paused) {
+		play();
+	} else {
+		video.pause();
+	}
+});
+
+// Keep the button label in sync with what the video is actually doing,
+// rather than flipping it in the click handler. That way it stays right even
+// when something else pauses or plays the video.
+video.addEventListener("play", () => {
+	pauseButton.textContent = "Pause";
+});
+video.addEventListener("pause", () => {
+	pauseButton.textContent = "Play";
+});
+
+saveButton.addEventListener("click", () => {
+	// A link with a download attribute saves what it points at instead of
+	// opening it. toDataURL turns the canvas into a PNG the link can point at.
+	const link = document.createElement("a");
+	link.href = display.toDataURL("image/png");
+	link.download = "ascii-video.png";
+	link.click();
+});
+
+// Phones have less room, so start them with fewer, bigger characters.
+if (window.innerWidth < 600) {
+	detailSlider.value = 70;
+	detailValue.textContent = 70;
+}
+
+// 'input' fires continuously while dragging; 'change' only fires on release.
+detailSlider.addEventListener("input", () => {
+	detailValue.textContent = detailSlider.value;
+	resize();
+});
+
+// The rest of the settings are read fresh every frame, so all a change needs
+// is a redraw (in case the video is paused and no new frame is coming).
+charsetSelect.addEventListener("change", drawFrame);
+colorToggle.addEventListener("change", drawFrame);
+invertToggle.addEventListener("change", drawFrame);
+
+// --- Layout ---------------------------------------------------------------
+
+// Size both canvases for the current detail and video shape, so the whole
+// ASCII picture fits on screen.
 function resize() {
 	// No video loaded yet, so we don't know its shape.
 	if (!video.videoWidth) return;
 
-	// The small source canvas: one pixel per character. Fewer rows than a
+	// The tiny source canvas: one pixel per character. Fewer rows than a
 	// square-pixel image would have, because each character is tall and thin.
-	canvas.width = columns;
-	canvas.height = Math.max(1, Math.round(columns * (video.videoHeight / video.videoWidth) * CHAR_ASPECT));
+	const columns = Number(detailSlider.value);
+	tiny.width = columns;
+	tiny.height = Math.max(1, Math.round(columns * (video.videoHeight / video.videoWidth) * CHAR_ASPECT));
 
 	// Biggest font size where all columns fit across AND all rows fit down.
 	const availableWidth = main.clientWidth - MAIN_PADDING;
 	const availableHeight = main.clientHeight - MAIN_PADDING;
-	const fontSize = Math.min(availableWidth / (canvas.width * CHAR_ASPECT), availableHeight / canvas.height);
+	const fontSize = Math.min(availableWidth / (tiny.width * CHAR_ASPECT), availableHeight / tiny.height);
 	cellWidth = fontSize * CHAR_ASPECT;
 	cellHeight = fontSize;
 
@@ -93,8 +195,8 @@ function resize() {
 	// many real pixels it has inside. On a high-DPI screen (most laptops and
 	// phones) 1 CSS pixel = 2+ real pixels, so we give the canvas extra pixels
 	// or the text comes out blurry.
-	const cssWidth = canvas.width * cellWidth;
-	const cssHeight = canvas.height * cellHeight;
+	const cssWidth = tiny.width * cellWidth;
+	const cssHeight = tiny.height * cellHeight;
 	const dpr = window.devicePixelRatio || 1;
 	display.style.width = `${cssWidth}px`;
 	display.style.height = `${cssHeight}px`;
@@ -114,86 +216,34 @@ function resize() {
 	drawFrame();
 }
 
-fileInput.addEventListener("change", () => {
-	const file = fileInput.files[0];
-	if (!file) return;
-
-	stopCamera();
-	stopFile();
-	message.textContent = "";
-
-	// Turn the picked file into a temporary URL the <video> element can play.
-	video.src = URL.createObjectURL(file);
-	mirrored = false;
-	video.play();
-});
-
-cameraButton.addEventListener("click", async () => {
-	try {
-		// Asks the user for permission the first time. `await` pauses here until
-		// they answer. If they say no (or there's no camera), it throws.
-		const newStream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-		stopCamera();
-		stopFile();
-		message.textContent = "";
-
-		// A live stream goes in srcObject, not src: it isn't a file with a URL.
-		stream = newStream;
-		video.srcObject = stream;
-		mirrored = true;
-		video.play();
-	} catch (err) {
-		message.textContent = `Couldn't open the camera: ${err.message}`;
-	}
-});
-
-pauseButton.addEventListener("click", () => {
-	if (video.paused) {
-		video.play();
-	} else {
-		video.pause();
-	}
-});
-
-// Keep the button label in sync with what the video is actually doing,
-// rather than flipping it in the click handler. That way it stays right even
-// when something else pauses or plays the video.
-video.addEventListener("play", () => {
-	pauseButton.textContent = "Pause";
-});
-video.addEventListener("pause", () => {
-	pauseButton.textContent = "Play";
-});
-
-// 'input' fires continuously while dragging; 'change' only fires on release.
-widthSlider.addEventListener("input", () => {
-	columns = Number(widthSlider.value);
-	widthValue.textContent = columns;
-	resize();
-});
-
-colorToggle.addEventListener("change", () => {
-	colorMode = colorToggle.checked;
-	drawFrame();
-});
-
 window.addEventListener("resize", resize);
 
 // Once the video knows its real size we can lay everything out.
 // This fires for both files and the camera.
 video.addEventListener("loadedmetadata", () => {
+	hint.hidden = true;
+	display.hidden = false;
 	pauseButton.disabled = false;
+	saveButton.disabled = false;
 	resize();
 });
 
-// Read the small canvas's pixels and draw them as characters on the display.
+// The video's shape can change while it plays, e.g. turning a phone
+// sideways with the camera on.
+video.addEventListener("resize", resize);
+
+// --- Drawing --------------------------------------------------------------
+
+// Read the tiny canvas's pixels and draw them as characters on the display.
 function drawAscii() {
-	const { width, height } = canvas;
+	const { width, height } = tiny;
+	const ramp = CHARSETS[charsetSelect.value];
+	const colorMode = colorToggle.checked;
+	const inverted = invertToggle.checked;
 
 	// data is a flat array of numbers: [r, g, b, a, r, g, b, a, ...],
 	// 4 entries per pixel, row by row from the top-left corner.
-	const { data } = ctx.getImageData(0, 0, width, height);
+	const { data } = tinyCtx.getImageData(0, 0, width, height);
 
 	// Clear last frame by painting the background black.
 	displayCtx.fillStyle = "#000";
@@ -213,11 +263,11 @@ function drawAscii() {
 
 			// Our eyes are most sensitive to green and least to blue, so a plain
 			// average looks wrong. These weights are the standard "luma" formula.
-			const brightness = 0.299 * r + 0.587 * g + 0.114 * b; // 0..255
+			let brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255; // 0..1
+			if (inverted) brightness = 1 - brightness;
 
-			// Map 0..255 onto 0..RAMP.length-1 and pick that character.
-			const index = Math.round((brightness / 255) * (RAMP.length - 1));
-			const char = RAMP[index];
+			// Map 0..1 onto the ramp and pick that character.
+			const char = ramp[Math.round(brightness * (ramp.length - 1))];
 
 			if (colorMode) {
 				// Each character gets its own color, so each needs its own fillText.
@@ -245,13 +295,13 @@ function drawFrame() {
 	// Draw the full-size frame squashed down into our tiny canvas.
 	// For a mirror image: move the origin to the right edge, then flip the
 	// x-axis so drawing goes right-to-left. save/restore undoes it afterwards.
-	ctx.save();
+	tinyCtx.save();
 	if (mirrored) {
-		ctx.translate(canvas.width, 0);
-		ctx.scale(-1, 1);
+		tinyCtx.translate(tiny.width, 0);
+		tinyCtx.scale(-1, 1);
 	}
-	ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-	ctx.restore();
+	tinyCtx.drawImage(video, 0, 0, tiny.width, tiny.height);
+	tinyCtx.restore();
 
 	drawAscii();
 }
@@ -266,8 +316,3 @@ function onVideoFrame() {
 }
 
 video.requestVideoFrameCallback(onVideoFrame);
-
-// Jumping to a new spot while paused doesn't trigger the callback above
-// (our video is hidden, so the browser never "presents" that frame), so
-// redraw by hand once the jump finishes.
-video.addEventListener("seeked", drawFrame);

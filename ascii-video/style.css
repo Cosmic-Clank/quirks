@@ -1,0 +1,125 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Header on top, and <main> takes up all the remaining height. main.js
+   measures <main> to work out how big the ASCII can be.
+   dvh is the height you can actually see, without a phone's address bar. */
+body {
+  margin: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #ddd;
+  font: 14px ui-monospace, Menlo, Consolas, monospace;
+}
+
+/* ---- Controls ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #222;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.button {
+  padding: 7px 14px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+  /* <button> doesn't inherit these by default, <label> does. Make them match. */
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+.button:hover:not(:disabled) {
+  border-color: #8ef0a7;
+  color: #fff;
+}
+.button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+select {
+  padding: 5px 8px;
+  background: #111;
+  color: inherit;
+  font: inherit;
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+
+input[type="checkbox"],
+input[type="range"] {
+  margin: 0;
+  accent-color: #8ef0a7;
+}
+
+#detail-value {
+  min-width: 3ch;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Errors get a line of their own, and take no space when there aren't any */
+#message {
+  width: 100%;
+  margin: 0;
+  color: #f77;
+}
+#message:empty {
+  display: none;
+}
+
+/* ---- The picture ---- */
+main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px; /* main.js counts on this being 16px (MAIN_PADDING) */
+  overflow: hidden;
+}
+
+#hint {
+  margin: 0;
+  text-align: center;
+  line-height: 1.7;
+  color: #777;
+}
+
+/* Some browsers stop decoding a video that isn't on the page at all
+   (display: none), so instead of hiding it we make it 1px and see-through. */
+#video {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- Phones ---- */
+@media (max-width: 600px) {
+  .controls { padding: 10px 12px; gap: 10px; }
+  .button { padding: 7px 10px; }
+  input[type="range"] { width: 110px; }
+}
