@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chaos Game</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
+    canvas { display: block; cursor: crosshair; }
+
+    /* ---- Settings panel ---- */
+    .panel {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      width: 240px;
+      padding: 6px 12px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .panel summary { padding: 4px 0; cursor: pointer; }
+    .panel p { margin: 8px 0 0; color: #888; }
+    .shapes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+    .panel button {
+      padding: 6px 8px;
+      font: inherit;
+      color: inherit;
+      background: #0e1117;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .panel button:hover { border-color: #888; }
+    /* Name and number on one line, slider underneath */
+    .panel label { display: grid; grid-template-columns: 1fr auto; margin-top: 12px; }
+    .panel input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 4px 0 0; }
+    .panel .check { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+    .panel input { accent-color: #f5c84c; margin: 0; }
+
+    /* Phones: stretch the panel along the bottom, where a thumb can reach it */
+    @media (max-width: 500px) {
+      .panel { top: auto; bottom: 12px; left: 12px; width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="board"></canvas>
+
+  <details class="panel" id="panel" open>
+    <summary>Settings</summary>
+    <p>Click anywhere to add a corner.</p>
+    <div class="shapes">
+      <!-- data-sides is how many corners the shape has -->
+      <button type="button" data-sides="3">Triangle</button>
+      <button type="button" data-sides="4">Square</button>
+      <button type="button" data-sides="5">Pentagon</button>
+      <button type="button" id="clear">Clear</button>
+    </div>
+    <label>Jump <output id="jump-value">0.5</output>
+      <input type="range" id="jump" min="0.1" max="0.9" step="0.01" value="0.5">
+    </label>
+    <label>Speed <output id="speed-value"></output>
+      <input type="range" id="speed" min="1" max="5" step="1" value="4">
+    </label>
+    <label class="check"><input type="checkbox" id="no-repeat"> Never the same corner twice</label>
+  </details>
+
+  <script src="chaos.js"></script>
+</body>
+</html>

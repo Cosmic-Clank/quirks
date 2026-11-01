@@ -15,6 +15,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 | [Game of Life](game-of-life/) | Cells live or die by counting their neighbours. Draw your own patterns and watch them grow. |
 | [Rain](rain/) | Drops falling at different depths, in purple, blue, or black and yellow. Change the amount, speed and wind. |
 | [Falling sand](sand/) | Pour sand and water, draw walls, and watch it all pile up and slosh around. Turn on Colorful for rainbow sand. |
+| [Chaos game](chaos-game/) | Jump halfway toward a random corner, over and over, and a fractal appears out of the noise. |
 
 ## Running it locally
 
@@ -38,6 +39,7 @@ ascii-video/
 game-of-life/
 rain/
 sand/
+chaos-game/
 ```
 
 Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder. The `preview.webp` inside is only for the home page.

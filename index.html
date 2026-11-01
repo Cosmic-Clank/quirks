@@ -203,6 +203,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">06</span><span>Simulation</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="chaos-game/" tabindex="-1">
+              <img src="chaos-game/preview.webp" width="1100" height="688" alt="Five colorful pentagons, each made of smaller pentagons, drawn entirely out of tiny dots">
+            </a>
+            <div class="quirk-intro">
+              <h3>Chaos game</h3>
+              <p class="subtitle">Order out of random dots</p>
+              <p>Put down a few corners, then jump halfway toward a random one, over and over, leaving a dot each time. You'd expect a random mess. Instead, a perfect fractal appears out of the noise.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="chaos-game/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="chaos-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="chaos-more" hidden>
+            <div>
+              <p>The chaos game was made famous by the mathematician Michael Barnsley. Take three corners of a triangle and start anywhere. Pick a corner at random, move halfway toward it, and put a dot there. Repeat a few thousand times.</p>
+              <p>Every time, from any starting point, you get the <strong>Sierpinski triangle</strong>: a triangle made of three smaller triangles, each made of three smaller ones, forever. It's a <strong>fractal</strong>, a shape that looks the same however far you zoom in. The dice rolls are completely random, but the picture they draw never is.</p>
+              <p>Try this: press Square, and you just get a filled-in square. Then tick "Never the same corner twice" and watch a new fractal appear. Press Pentagon and set Jump to 0.62 for pentagons made of pentagons. Or turn Speed all the way down and watch it dot by dot.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>A point starts somewhere random. Every dot is one jump:</p>
+              <ol class="rules">
+                <li><strong>Pick a corner</strong> Any corner, at random. With the rule on, never the same one as last time.</li>
+                <li><strong>Jump part way</strong> New position = position + (corner &minus; position) × jump. At 0.5 that's exactly halfway.</li>
+                <li><strong>Leave a dot</strong> In that corner's color. The first 20 jumps are skipped, while the point is still on its way in from the random start.</li>
+              </ol>
+              <p>Why a fractal? A halfway jump toward a corner shrinks the whole picture to half size and tucks it into that corner. Three corners make three half-size copies of the picture, and a picture made of three half-size copies of itself is exactly the Sierpinski triangle.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -212,8 +247,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>
