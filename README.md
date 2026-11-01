@@ -32,14 +32,13 @@ boids/                   one folder per quirk
 ascii/
 ```
 
-Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on anything outside its folder.
+Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder.
 
 ## Adding a quirk
 
 1. Make a folder named after it, e.g. `sand/`, with an `index.html` inside. Put the CSS and JS in that page, or next to it as separate files, whichever reads better.
-2. Add a way back home somewhere on the page: `<a class="home-link" href="../">← quirks</a>`.
-3. On the home page (`index.html`), copy one of the `<article class="card">` blocks. Give it the next number, a label (Simulation, Toy, Tool...), a name, and a sentence or two about it.
-4. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
+2. On the home page (`index.html`), copy one of the `<article class="card">` blocks. Give it the next number, a label (Simulation, Toy, Tool...), a name, and a sentence or two about it.
+3. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
 
 A few rules keep things easy to read:
 
