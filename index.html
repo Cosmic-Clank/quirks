@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>quirks</title>
+  <meta name="description" content="Little simulations, toys and tools, written in plain HTML, CSS and JavaScript.">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page" id="top">
+    <header class="topbar">
+      <div>
+        <h1>quirks<span class="period">.</span></h1>
+        <p class="tagline">Little simulations, toys and tools.</p>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#how">How it works</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 class="visually-hidden">Things to play with</h2>
+
+      <!-- To add a new quirk: make a folder next to this file, then copy one of these cards. -->
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-head"><span class="index">01</span><span>Simulation</span></div>
+          <div class="card-body">
+            <h3><a class="card-link" href="boids/">Boids</a></h3>
+            <p>A flock of little birds following three simple rules: don't crowd, match direction, stay together. Move your mouse through them.</p>
+            <span class="card-more" aria-hidden="true">Play →</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><span class="index">02</span><span>Toy</span></div>
+          <div class="card-body">
+            <h3><a class="card-link" href="ascii/">ASCII video</a></h3>
+            <p>Turns a video or your camera into moving ASCII art, live in the browser. Nothing gets uploaded anywhere.</p>
+            <span class="card-more" aria-hidden="true">Play →</span>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <!-- The text is written out twice, and the animation slides it left by exactly
+       half its width, then jumps back. Because both halves match, the jump is invisible. -->
+  <div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+    </div>
+  </div>
+  </div>
+
+  <div class="page">
+    <section id="how" class="how">
+      <div>
+        <p class="section-tag">How it works</p>
+        <h2>No magic, just source</h2>
+      </div>
+      <div class="how-copy">
+        <p>Every quirk is a plain HTML, CSS and JavaScript page. No frameworks, no build step, nothing to install.</p>
+        <p class="aside">Right-click, View page source.<br>It's all there, with comments.</p>
+      </div>
+    </section>
+
+    <footer>
+      <a href="https://github.com/Cosmic-Clank/quirks">Source on GitHub</a>
+      <a class="back-to-top" href="#top">Back to top ↑</a>
+    </footer>
+  </div>
+</body>
+</html>

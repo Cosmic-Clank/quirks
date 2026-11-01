@@ -1,0 +1,364 @@
+/* ---------- Fonts ---------- */
+/* Both fonts are under the SIL Open Font License (see the .txt files in fonts/). */
+@font-face {
+  font-family: Asap;
+  src: url("fonts/asap-bold-webfont.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Courier Prime";
+  src: url("fonts/courier_prime-webfont.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ---------- Colors and sizes ---------- */
+/* Change these and the whole page follows. */
+:root {
+  color-scheme: dark;
+  --ink: #111111;      /* page background */
+  --surface: #1c1c1c;  /* card background */
+  --paper: #f2f2ee;    /* text, borders and shadows */
+  --muted: #b1b0ab;    /* secondary text */
+  --a1: #e8c35e;       /* yellow */
+  --a2: #ec7a74;       /* red */
+  --a3: #80b3e8;       /* blue */
+  --on-accent: #111111; /* text on top of an accent color */
+
+  --border: 3px solid var(--paper);
+  /* Hard, offset shadows with no blur: the "stuck-on sticker" look */
+  --shadow-sm: 3px 3px 0 0 var(--paper);
+  --shadow: 5px 5px 0 0 var(--paper);
+  --shadow-lg: 8px 8px 0 0 var(--paper);
+
+  --body: "Courier Prime", monospace;
+  --heading: Asap, sans-serif;
+  --press: 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  /* The dot grid: one small dot, repeated every 26px */
+  background-color: var(--ink);
+  background-image: radial-gradient(color-mix(in srgb, var(--paper) 10%, transparent) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+  color: var(--paper);
+  font: 1.125rem/1.6 var(--body);
+}
+
+::selection {
+  background: var(--a1);
+  color: var(--on-accent);
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--a3);
+  outline-offset: 3px;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--heading);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2.3rem;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin: 1.1rem 0 0;
+}
+
+/* Hidden on screen, but still read out by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Keeps content centered, at most 1100px wide */
+.page {
+  width: min(100% - 7rem, 1100px);
+  margin: auto;
+}
+
+/* Small uppercase label chip */
+.section-tag {
+  display: inline-block;
+  margin: 0;
+  padding: 0.42rem 0.7rem 0.36rem;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--surface);
+  border: 2px solid var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.8rem 0 1.5rem;
+  border-bottom: var(--border);
+}
+
+h1 {
+  font-size: 2.8rem;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin: 0 0 0.4rem;
+  text-shadow: 0.05em 0.05em 0 var(--a1);
+}
+.period {
+  color: var(--a2);
+  text-shadow: none;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.topbar nav {
+  font-size: 0.8125rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.topbar nav a {
+  display: inline-block;
+  padding: 0.6rem 0.75rem;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: translate var(--press), box-shadow var(--press);
+}
+.topbar nav a:hover {
+  border-color: var(--paper);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  translate: -1px -1px;
+}
+
+/* ---------- Quirk cards ---------- */
+/* As many 19rem-wide columns as fit, stretched to fill the row */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 1.9rem 1.7rem;
+  padding: 2.6rem 0 1rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  transition: translate var(--press), box-shadow var(--press);
+}
+.card:hover {
+  translate: -3px -3px;
+  box-shadow: var(--shadow-lg);
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--on-accent);
+  background: var(--a1);
+  border-bottom: var(--border);
+}
+/* Cycle the header colors: yellow, red, blue, yellow... */
+.card:nth-child(3n + 2) .card-head { background: var(--a2); }
+.card:nth-child(3n) .card-head { background: var(--a3); }
+
+.index {
+  padding: 0.2rem 0.45rem 0.15rem;
+  font-size: 0.8125rem;
+  color: #fffdf5;
+  background: var(--on-accent);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.3rem 1.25rem 1.4rem;
+}
+.card h3 {
+  font-size: 1.6rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.7rem;
+}
+.card p {
+  font-size: 0.9688rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* The link's invisible ::after stretches over the whole card,
+   so the entire card is clickable with just one link inside it. */
+.card-link {
+  text-decoration: none;
+}
+.card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card-more {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.card:hover .card-more {
+  text-decoration: underline;
+  text-decoration-color: var(--a1);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+/* ---------- Marquee band ---------- */
+/* The band is tilted and wider than the screen, so this wrapper
+   trims off the extra instead of letting the page scroll sideways */
+.marquee-wrap {
+  overflow: hidden;
+  padding: 2.5rem 0;
+}
+.marquee {
+  overflow: hidden;
+  /* A bit wider than the screen, so the tilted band's corners never show */
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  background: var(--a1);
+  color: var(--on-accent);
+  border-block: var(--border);
+  rotate: -1deg;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  padding: 0.85rem 0 0.8rem;
+  font: 700 1.25rem/1 var(--heading);
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: marquee 60s linear infinite;
+}
+/* Spacing goes after each item (not between them with `gap`)
+   so both halves of the track are exactly the same width */
+.marquee-track span {
+  padding-right: 1.6rem;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- How it works panel ---------- */
+.how {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 5rem;
+  padding: 2.6rem;
+  color: var(--on-accent);
+  background: var(--a2);
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+}
+.how-copy p {
+  font-size: 1.1875rem;
+  line-height: 1.8;
+}
+.how-copy .aside {
+  display: inline-block;
+  margin: 0;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  background: #fffdf5;
+  border: 2px solid var(--on-accent);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.2rem 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+  border-top: var(--border);
+}
+.back-to-top {
+  padding: 0.45rem 0.8rem;
+  color: var(--paper);
+  text-decoration: none;
+  border: 2px solid var(--paper);
+  box-shadow: var(--shadow-sm);
+  transition: translate var(--press), box-shadow var(--press);
+}
+.back-to-top:hover {
+  translate: -1px -1px;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- People who turn off animations in their OS settings ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track { animation: none; }
+  * { transition-duration: 0s !important; }
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 700px) {
+  .page { width: calc(100% - 2.5rem); }
+  body { font-size: 1.0625rem; }
+  .topbar { padding: 1.3rem 0 1.2rem; }
+  .topbar nav { font-size: 0.75rem; letter-spacing: 0.03em; }
+  h1 { font-size: 2.3rem; }
+  .tagline { font-size: 0.875rem; }
+  .card-grid { padding-top: 1.8rem; }
+  .marquee-track { font-size: 1rem; }
+  .marquee-track span { padding-right: 1.2rem; }
+  h2 { font-size: 1.9rem; }
+  .how { grid-template-columns: 1fr; padding: 1.8rem 1.4rem 2rem; box-shadow: var(--shadow); }
+}
