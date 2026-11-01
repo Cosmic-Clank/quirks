@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game of Life</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
+    /* touch-action: none lets a finger draw cells instead of scrolling the page */
+    canvas { display: block; touch-action: none; cursor: crosshair; }
+
+    /* ---- Control bar, floating at the bottom ---- */
+    .bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      max-width: 560px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 10px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .tip { width: 100%; margin: 0; text-align: center; color: #888; }
+    button {
+      padding: 6px 12px;
+      font: inherit;
+      color: inherit;
+      background: #0e1117;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { border-color: #888; }
+    label { display: flex; align-items: center; gap: 8px; }
+    input { width: 100px; accent-color: #f5c84c; }
+    #generation { min-width: 10ch; color: #888; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <canvas id="board"></canvas>
+
+  <div class="bar">
+    <p class="tip">Draw on the grid with your mouse or finger. Space pauses.</p>
+    <button type="button" id="play">Pause</button>
+    <button type="button" id="step">Step</button>
+    <button type="button" id="random">Random</button>
+    <button type="button" id="clear">Clear</button>
+    <label>Speed <input type="range" id="speed" min="1" max="30" value="10"></label>
+    <span id="generation">Gen 0</span>
+  </div>
+
+  <script src="life.js"></script>
+</body>
+</html>
