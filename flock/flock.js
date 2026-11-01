@@ -1,4 +1,4 @@
-// Boids: separation, alignment and cohesion.
+// Flock simulation: separation, alignment and cohesion.
 
 // --- Setup (like pygame.display.set_mode) -------------------------------
 const canvas = document.getElementById("sky");
@@ -13,7 +13,7 @@ function resize() {
 	height = window.innerHeight;
 
 	// Phones and most laptops have 2-3 real pixels per CSS pixel. Give the canvas
-	// that many so the boids stay sharp, then scale all drawing up to match.
+	// that many so the birds stay sharp, then scale all drawing up to match.
 	const dpr = window.devicePixelRatio || 1;
 	canvas.width = width * dpr;
 	canvas.height = height * dpr;
@@ -69,8 +69,8 @@ canvas.addEventListener("pointerleave", () => {
 	mouse.active = false;
 });
 
-// --- The Boid class -------------------------------------------------------
-class Boid {
+// --- The Bird class -------------------------------------------------------
+class Bird {
 	constructor() {
 		// Random position anywhere on screen
 		this.x = Math.random() * width;
@@ -86,16 +86,16 @@ class Boid {
 		this.ay = 0;
 	}
 
-	separate(boids) {
+	separate(birds) {
 		let steerX = 0;
 		let steerY = 0;
 
-		for (const other of boids) {
+		for (const other of birds) {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
 			if (distSq > 0 && distSq < settings.space * settings.space) {
-				// Move away from the other boid
+				// Move away from the other bird
 				steerX += (this.x - other.x) / distSq;
 				steerY += (this.y - other.y) / distSq;
 			}
@@ -104,12 +104,12 @@ class Boid {
 		this.ay += steerY * settings.separation;
 	}
 
-	align(boids) {
+	align(birds) {
 		let avgVx = 0;
 		let avgVy = 0;
 		let count = 0;
 
-		for (const other of boids) {
+		for (const other of birds) {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
@@ -129,12 +129,12 @@ class Boid {
 		}
 	}
 
-	cohesion(boids) {
+	cohesion(birds) {
 		let avgX = 0;
 		let avgY = 0;
 		let count = 0;
 
-		for (const other of boids) {
+		for (const other of birds) {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
@@ -196,8 +196,8 @@ class Boid {
 	}
 
 	draw() {
-		// Draw a little triangle pointing where the boid is heading.
-		// save/translate/rotate/restore = move the "pen" to the boid,
+		// Draw a little triangle pointing where the bird is heading.
+		// save/translate/rotate/restore = move the "pen" to the bird,
 		// turn it to face the velocity, draw, then put the pen back.
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -216,8 +216,8 @@ class Boid {
 }
 
 // --- The flock ------------------------------------------------------------
-// Starts empty. frame() adds or removes boids to match the Boids slider.
-const boids = [];
+// Starts empty. frame() adds or removes birds to match the Birds slider.
+const birds = [];
 
 // --- Game loop (like `while running:` in pygame) --------------------------
 let lastTime = performance.now();
@@ -230,9 +230,9 @@ function frame(now) {
 	const dt = Math.min((now - lastTime) / (1000 / 60), 3);
 	lastTime = now;
 
-	// Match the flock to the Boids slider
-	while (boids.length < settings.count) boids.push(new Boid());
-	boids.length = settings.count;
+	// Match the flock to the Birds slider
+	while (birds.length < settings.count) birds.push(new Bird());
+	birds.length = settings.count;
 
 	// Clear the screen (like screen.fill(...))
 	ctx.fillStyle = "#0e1117";
@@ -246,19 +246,19 @@ function frame(now) {
 		ctx.stroke();
 	}
 
-	// Pass 1: every boid decides how to steer, looking at the same snapshot.
+	// Pass 1: every bird decides how to steer, looking at the same snapshot.
 	// Rules only write to ax/ay, so nobody's x/vx changes during this pass.
-	for (const boid of boids) {
-		boid.separate(boids);
-		boid.align(boids);
-		boid.cohesion(boids);
-		boid.avoidMouse();
+	for (const bird of birds) {
+		bird.separate(birds);
+		bird.align(birds);
+		bird.cohesion(birds);
+		bird.avoidMouse();
 	}
 
 	// Pass 2: now that everyone has decided, everyone moves.
-	for (const boid of boids) {
-		boid.update(dt);
-		boid.draw();
+	for (const bird of birds) {
+		bird.update(dt);
+		bird.draw();
 	}
 
 	// Ask the browser to call frame() again before the next repaint.

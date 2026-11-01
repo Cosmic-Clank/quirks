@@ -32,20 +32,20 @@
         <article class="quirk">
           <div class="card-head"><span class="index">01</span><span>Simulation</span></div>
           <div class="quirk-main">
-            <a class="quirk-shot" href="boids/" tabindex="-1">
-              <img src="boids/preview.webp" width="1100" height="688" alt="A flock of small blue triangles swirling across a dark screen, with a panel of sliders on the right">
+            <a class="quirk-shot" href="flock/" tabindex="-1">
+              <img src="flock/preview.webp" width="1100" height="688" alt="A flock of small blue triangles swirling across a dark screen, with a panel of sliders on the right">
             </a>
             <div class="quirk-intro">
-              <h3>Boids</h3>
+              <h3>Flock simulation</h3>
               <p class="subtitle">Three rules make a flock</p>
               <p>A few hundred little birds, each following three simple rules about the birds around it. Nobody tells them to flock, but they do. Move your mouse through them, or tweak the rules with the sliders.</p>
               <div class="quirk-actions">
-                <a class="button play" href="boids/">Play →</a>
-                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="boids-more">Read more</button>
+                <a class="button play" href="flock/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="flock-more">Read more</button>
               </div>
             </div>
           </div>
-          <div class="quirk-more" id="boids-more" hidden>
+          <div class="quirk-more" id="flock-more" hidden>
             <div>
               <p>In 1986 Craig Reynolds wanted to animate a flock of birds without scripting every single bird. His trick was to not program the flock at all. Program one bird, give it three simple rules about the birds around it, and copy it a few hundred times. The flock shows up on its own. He called them boids, short for "bird-oid objects", and the same idea later flew the bat swarms in Batman Returns.</p>
               <p>No rule says "form a flock", "split around the mouse" or "merge back together", yet that's exactly what you see. This is called emergence: complex group behaviour growing out of simple local rules, the same way real starlings and schools of fish move as one without a leader.</p>
@@ -53,13 +53,13 @@
             </div>
             <div class="under-hood">
               <p class="hood-label">Under the hood</p>
-              <p>Each boid only knows three things about itself: its <strong>position</strong> (x, y), its <strong>velocity</strong> (which way and how fast it's moving) and a <strong>steering</strong> nudge that builds up each frame. Every frame, it looks at its neighbours and adds up three nudges:</p>
+              <p>Each bird only knows three things about itself: its <strong>position</strong> (x, y), its <strong>velocity</strong> (which way and how fast it's moving) and a <strong>steering</strong> nudge that builds up each frame. Every frame, it looks at its neighbours and adds up three nudges:</p>
               <ol class="rules">
-                <li><strong>Separation</strong> Steer away from boids inside your personal space. The closer they are, the harder the push.</li>
-                <li><strong>Alignment</strong> Turn toward the average direction of the boids you can see.</li>
-                <li><strong>Cohesion</strong> Drift toward the average position of the boids you can see.</li>
+                <li><strong>Separation</strong> Steer away from birds inside your personal space. The closer they are, the harder the push.</li>
+                <li><strong>Alignment</strong> Turn toward the average direction of the birds you can see.</li>
+                <li><strong>Cohesion</strong> Drift toward the average position of the birds you can see.</li>
               </ol>
-              <p>The nudges are added to the velocity, the speed is reset to a fixed value, and the boid moves. Do that for every boid, every frame.</p>
+              <p>The nudges are added to the velocity, the speed is reset to a fixed value, and the bird moves. Do that for every bird, every frame.</p>
             </div>
           </div>
         </article>
@@ -177,8 +177,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Boids</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>

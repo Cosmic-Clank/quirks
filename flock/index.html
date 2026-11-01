@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Boids</title>
+  <title>Flock Simulation</title>
   <style>
     html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
     /* touch-action: none stops a finger drag from scrolling the page, so it pushes the flock instead */
@@ -50,10 +50,10 @@
 <body>
   <canvas id="sky"></canvas>
 
-  <!-- Each slider's name matches a key in `settings` in boids.js. value="" is its starting value. -->
+  <!-- Each slider's name matches a key in `settings` in flock.js. value="" is its starting value. -->
   <details class="panel" id="panel" open>
     <summary>Settings</summary>
-    <label>Boids <output></output>
+    <label>Birds <output></output>
       <input type="range" name="count" min="10" max="500" step="10" value="200">
     </label>
     <label>Speed <output></output>
@@ -81,6 +81,6 @@
     <button type="button" id="reset">Reset</button>
   </details>
 
-  <script src="boids.js"></script>
+  <script src="flock.js"></script>
 </body>
 </html>

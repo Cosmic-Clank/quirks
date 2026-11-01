@@ -10,7 +10,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 
 | Quirk | What it does |
 | --- | --- |
-| [Boids](boids/) | A flock of birds following three simple rules. Move your mouse through them, or tweak the rules with the sliders. |
+| [Flock simulation](flock/) | A flock of birds following three simple rules. Move your mouse through them, or tweak the rules with the sliders. |
 | [ASCII video](ascii-video/) | Turns a video or your camera into moving ASCII art, live in the browser. Pick a character set, add color, save a frame. |
 | [Game of Life](game-of-life/) | Cells live or die by counting their neighbours. Draw your own patterns and watch them grow. |
 | [Rain](rain/) | Drops falling at different depths, in purple, blue, or black and yellow. Change the amount, speed and wind. |
@@ -25,14 +25,14 @@ pnpm dlx serve
 uv run python -m http.server
 ```
 
-(Opening `index.html` straight from disk mostly works, but links like `boids/` show a folder listing instead of the page, and the camera may be blocked.)
+(Opening `index.html` straight from disk mostly works, but links like `flock/` show a folder listing instead of the page, and the camera may be blocked.)
 
 ## How it's laid out
 
 ```
 index.html, style.css   the home page, with a box for each quirk
 favicon.svg, fonts/      shared by the home page
-boids/                   one folder per quirk
+flock/                   one folder per quirk
 ascii-video/
 game-of-life/
 rain/
