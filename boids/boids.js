@@ -4,46 +4,82 @@
 const canvas = document.getElementById("sky");
 const ctx = canvas.getContext("2d"); // the "surface" we draw on
 
+// Screen size in CSS pixels. The rest of the code uses these, not canvas.width.
+let width = 0;
+let height = 0;
+
 function resize() {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	width = window.innerWidth;
+	height = window.innerHeight;
+
+	// Phones and most laptops have 2-3 real pixels per CSS pixel. Give the canvas
+	// that many so the boids stay sharp, then scale all drawing up to match.
+	const dpr = window.devicePixelRatio || 1;
+	canvas.width = width * dpr;
+	canvas.height = height * dpr;
+	canvas.style.width = `${width}px`;
+	canvas.style.height = `${height}px`;
+	ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 window.addEventListener("resize", resize);
 resize();
 
-const NUM_BOIDS = 200;
-const MAX_SPEED = 1.5;
-const SEPARATION_RADIUS = 25;
-const SEPARATION_STRENGTH = 0.5;
-const ALIGNMENT_RADIUS = 100;
-const ALIGNMENT_STRENGTH = 0.05;
-const COHESION_RADIUS = 100;
-const COHESION_STRENGTH = 0.0005;
 const MOUSE_RADIUS = 100;
-const MOUSE_STRENGTH = 0.3;
+
+// --- Settings panel -------------------------------------------------------
+// Each slider has a name, like name="speed". readSliders() copies its value
+// into settings.speed, so everything else just reads from settings.
+const settings = {};
+const panel = document.getElementById("panel");
+const sliders = panel.querySelectorAll("input");
+
+function readSliders() {
+	for (const slider of sliders) {
+		settings[slider.name] = Number(slider.value);
+		slider.previousElementSibling.textContent = slider.value; // the <output> showing the number
+	}
+}
+for (const slider of sliders) {
+	slider.addEventListener("input", readSliders);
+}
+readSliders();
+
+document.getElementById("reset").addEventListener("click", () => {
+	// defaultValue is the value="" written in the HTML
+	for (const slider of sliders) {
+		slider.value = slider.defaultValue;
+	}
+	readSliders();
+});
+
+// Start with the panel folded away on small screens, so the flock is visible
+if (width < 600) panel.open = false;
 
 // --- Mouse tracking -------------------------------------------------------
 // Pointer events cover mouse, touch and pen with one set of listeners.
 const mouse = { x: 0, y: 0, active: false };
-canvas.addEventListener("pointermove", (e) => {
+function moveMouse(e) {
 	mouse.x = e.clientX;
 	mouse.y = e.clientY;
 	mouse.active = true;
-});
+}
+canvas.addEventListener("pointermove", moveMouse);
+canvas.addEventListener("pointerdown", moveMouse); // a tap on a touch screen
 canvas.addEventListener("pointerleave", () => {
 	mouse.active = false;
 });
+
 // --- The Boid class -------------------------------------------------------
 class Boid {
 	constructor() {
 		// Random position anywhere on screen
-		this.x = Math.random() * canvas.width;
-		this.y = Math.random() * canvas.height;
+		this.x = Math.random() * width;
+		this.y = Math.random() * height;
 
 		// Random direction, fixed speed
 		const angle = Math.random() * Math.PI * 2;
-		this.vx = Math.cos(angle) * MAX_SPEED;
-		this.vy = Math.sin(angle) * MAX_SPEED;
+		this.vx = Math.cos(angle) * settings.speed;
+		this.vy = Math.sin(angle) * settings.speed;
 
 		// Steering pushes collected by the rules this frame, applied in update()
 		this.ax = 0;
@@ -58,14 +94,14 @@ class Boid {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
-			if (distSq > 0 && distSq < SEPARATION_RADIUS * SEPARATION_RADIUS) {
+			if (distSq > 0 && distSq < settings.space * settings.space) {
 				// Move away from the other boid
 				steerX += (this.x - other.x) / distSq;
 				steerY += (this.y - other.y) / distSq;
 			}
 		}
-		this.ax += steerX * SEPARATION_STRENGTH;
-		this.ay += steerY * SEPARATION_STRENGTH;
+		this.ax += steerX * settings.separation;
+		this.ay += steerY * settings.separation;
 	}
 
 	align(boids) {
@@ -77,7 +113,7 @@ class Boid {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
-			if (distSq > 0 && distSq < ALIGNMENT_RADIUS * ALIGNMENT_RADIUS) {
+			if (distSq > 0 && distSq < settings.vision * settings.vision) {
 				avgVx += other.vx;
 				avgVy += other.vy;
 				count++;
@@ -88,8 +124,8 @@ class Boid {
 			avgVx /= count;
 			avgVy /= count;
 
-			this.ax += (avgVx - this.vx) * ALIGNMENT_STRENGTH;
-			this.ay += (avgVy - this.vy) * ALIGNMENT_STRENGTH;
+			this.ax += (avgVx - this.vx) * settings.alignment;
+			this.ay += (avgVy - this.vy) * settings.alignment;
 		}
 	}
 
@@ -102,7 +138,7 @@ class Boid {
 			if (other === this) continue; // Don't compare to self
 
 			const distSq = this.distanceSquared(other);
-			if (distSq > 0 && distSq < COHESION_RADIUS * COHESION_RADIUS) {
+			if (distSq > 0 && distSq < settings.vision * settings.vision) {
 				avgX += other.x;
 				avgY += other.y;
 				count++;
@@ -113,8 +149,8 @@ class Boid {
 			avgX /= count;
 			avgY /= count;
 
-			this.ax += (avgX - this.x) * COHESION_STRENGTH;
-			this.ay += (avgY - this.y) * COHESION_STRENGTH;
+			this.ax += (avgX - this.x) * settings.cohesion;
+			this.ay += (avgY - this.y) * settings.cohesion;
 		}
 	}
 
@@ -125,32 +161,32 @@ class Boid {
 		const dy = this.y - mouse.y;
 		const dist = Math.hypot(dx, dy);
 		if (dist > 0 && dist < MOUSE_RADIUS) {
-			// Full strength right at the cursor, fading to 0 at the edge of the radius
-			const push = (1 - dist / MOUSE_RADIUS) * MOUSE_STRENGTH;
+			// Full strength right at the cursor, fading to 0 at the edge of the radius.
+			// A negative setting flips the direction, so it pulls instead of pushes.
+			const push = (1 - dist / MOUSE_RADIUS) * settings.mouse;
 			this.ax += (dx / dist) * push;
 			this.ay += (dy / dist) * push;
 		}
 	}
 
-	update() {
+	update(dt) {
 		// Apply this frame's steering, then clear it for next frame
-		this.vx += this.ax;
-		this.vy += this.ay;
+		this.vx += this.ax * dt;
+		this.vy += this.ay * dt;
 		this.ax = 0;
 		this.ay = 0;
 
 		const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-		this.vx = (this.vx / speed) * MAX_SPEED;
-		this.vy = (this.vy / speed) * MAX_SPEED;
+		this.vx = (this.vx / speed) * settings.speed;
+		this.vy = (this.vy / speed) * settings.speed;
 
-		this.x += this.vx;
-		this.y += this.vy;
+		this.x += this.vx * dt;
+		this.y += this.vy * dt;
 
-		// Wrap around edges
-		if (this.x < 0) this.x += canvas.width;
-		if (this.x > canvas.width) this.x -= canvas.width;
-		if (this.y < 0) this.y += canvas.height;
-		if (this.y > canvas.height) this.y -= canvas.height;
+		// Wrap around edges. % keeps the remainder, so 810 % 800 = 10.
+		// Adding width first stops negatives: (-5 + 800) % 800 = 795.
+		this.x = (this.x + width) % width;
+		this.y = (this.y + height) % height;
 	}
 
 	distanceSquared(other) {
@@ -179,17 +215,28 @@ class Boid {
 	}
 }
 
-// --- Create the flock -----------------------------------------------------
+// --- The flock ------------------------------------------------------------
+// Starts empty. frame() adds or removes boids to match the Boids slider.
 const boids = [];
-for (let i = 0; i < NUM_BOIDS; i++) {
-	boids.push(new Boid());
-}
 
 // --- Game loop (like `while running:` in pygame) --------------------------
-function frame() {
+let lastTime = performance.now();
+
+function frame(now) {
+	// dt = how many 60fps frames' worth of time passed since the last frame:
+	// 1 on a 60Hz screen, 0.5 on 120Hz. Movement gets multiplied by it, so the
+	// flock flies at the same speed on any display (like pygame's clock.tick).
+	// Capped at 3 so coming back to a hidden tab doesn't fling everyone across.
+	const dt = Math.min((now - lastTime) / (1000 / 60), 3);
+	lastTime = now;
+
+	// Match the flock to the Boids slider
+	while (boids.length < settings.count) boids.push(new Boid());
+	boids.length = settings.count;
+
 	// Clear the screen (like screen.fill(...))
 	ctx.fillStyle = "#0e1117";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillRect(0, 0, width, height);
 
 	// Faint ring showing the mouse's push radius
 	if (mouse.active) {
@@ -210,12 +257,12 @@ function frame() {
 
 	// Pass 2: now that everyone has decided, everyone moves.
 	for (const boid of boids) {
-		boid.update();
+		boid.update(dt);
 		boid.draw();
 	}
 
-	// Ask the browser to call frame() again before the next repaint (~60fps).
-	// This replaces pygame's while-loop + display.flip() + clock.tick(60).
+	// Ask the browser to call frame() again before the next repaint.
+	// This replaces pygame's while-loop + display.flip().
 	requestAnimationFrame(frame);
 }
 

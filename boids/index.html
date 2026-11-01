@@ -4,14 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Boids</title>
+  <link rel="icon" href="../favicon.svg">
   <style>
     html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
     /* touch-action: none stops a finger drag from scrolling the page, so it pushes the flock instead */
     canvas { display: block; touch-action: none; }
-    .home-link {
-      position: fixed;
-      top: 12px;
-      left: 12px;
+    .home-link, .panel button {
       padding: 6px 12px;
       font: 14px monospace;
       color: #ddd;
@@ -19,13 +17,74 @@
       background: #0e1117;
       border: 1px solid #444;
       border-radius: 6px;
+      cursor: pointer;
     }
-    .home-link:hover { border-color: #888; }
+    .home-link:hover, .panel button:hover { border-color: #888; }
+    .home-link { position: fixed; top: 12px; left: 12px; }
+
+    /* ---- Settings panel ---- */
+    .panel {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      width: 230px;
+      max-height: calc(100% - 24px);
+      overflow-y: auto;
+      padding: 6px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .panel summary { padding: 4px 0; cursor: pointer; }
+    /* Name and number on one line, slider underneath */
+    .panel label { display: grid; grid-template-columns: 1fr auto; margin-top: 10px; }
+    .panel input { grid-column: 1 / -1; width: 100%; margin: 4px 0 0; accent-color: #7dd3fc; }
+    .panel p { margin: 4px 0 0; color: #888; }
+    .panel button { margin: 12px 0 6px; }
+
+    /* Phones: stretch the panel along the bottom instead, so it doesn't bump into the home link */
+    @media (max-width: 500px) {
+      .panel { top: auto; bottom: 12px; left: 12px; width: auto; max-height: 60%; }
+    }
   </style>
 </head>
 <body>
   <canvas id="sky"></canvas>
   <a class="home-link" href="../">← quirks</a>
+
+  <!-- Each slider's name matches a key in `settings` in boids.js. value="" is its starting value. -->
+  <details class="panel" id="panel" open>
+    <summary>Settings</summary>
+    <label>Boids <output></output>
+      <input type="range" name="count" min="10" max="500" step="10" value="200">
+    </label>
+    <label>Speed <output></output>
+      <input type="range" name="speed" min="0.5" max="5" step="0.1" value="1.5">
+    </label>
+    <label>Separation <output></output>
+      <input type="range" name="separation" min="0" max="2" step="0.05" value="0.5">
+    </label>
+    <label>Alignment <output></output>
+      <input type="range" name="alignment" min="0" max="0.2" step="0.01" value="0.05">
+    </label>
+    <label>Cohesion <output></output>
+      <input type="range" name="cohesion" min="0" max="0.003" step="0.0001" value="0.0005">
+    </label>
+    <label>Personal space <output></output>
+      <input type="range" name="space" min="5" max="60" step="1" value="25">
+    </label>
+    <label>Vision <output></output>
+      <input type="range" name="vision" min="20" max="200" step="5" value="100">
+    </label>
+    <label>Mouse push <output></output>
+      <input type="range" name="mouse" min="-1" max="1" step="0.05" value="0.3">
+    </label>
+    <p>Below 0, the mouse pulls them in.</p>
+    <button type="button" id="reset">Reset</button>
+  </details>
+
   <script src="boids.js"></script>
 </body>
 </html>

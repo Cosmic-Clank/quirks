@@ -8,7 +8,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 
 | Quirk | What it does |
 | --- | --- |
-| [Boids](boids/) | A flock of birds following three simple rules. Move your mouse through them. |
+| [Boids](boids/) | A flock of birds following three simple rules. Move your mouse through them, or tweak the rules with the sliders. |
 | [ASCII video](ascii/) | Turns a video or your camera into moving ASCII art, live in the browser. |
 
 ## Running it locally
