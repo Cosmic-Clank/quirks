@@ -2,6 +2,8 @@
 
 Little simulations, toys and tools, written in plain HTML, CSS and JavaScript.
 
+**Play with them at [quirks-gamma.vercel.app](https://quirks-gamma.vercel.app).**
+
 No frameworks, no build step, nothing to install. Every quirk is a small page you can open, play with, and read the source of. The code is commented so you can follow along.
 
 This is a just-for-fun project where I learn by building. It's part handwritten, part vibe coded, with AI helping me understand things, fill in gaps and figure out how stuff works. Whenever something clicks, it becomes a quirk and goes up here. Don't expect polish, just curiosity.
