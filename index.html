@@ -273,6 +273,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">08</span><span>Simulation</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="double-pendulum/" tabindex="-1">
+              <img src="double-pendulum/preview.webp" width="1100" height="688" alt="Twenty rainbow-colored double pendulums: half still swing together as a fan, the other half have scattered every which way">
+            </a>
+            <div class="quirk-intro">
+              <h3>Double pendulum</h3>
+              <p class="subtitle">Tiny differences, wild results</p>
+              <p>A pendulum hanging off another pendulum. A whole rainbow of them start a hair's width apart and swing together, until suddenly they don't. It's chaos you can watch happen.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="double-pendulum/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="pendulum-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="pendulum-more" hidden>
+            <div>
+              <p>A single pendulum is the most predictable thing there is. That's why clocks used them. Hang a second one off the end of it, though, and it becomes one of the simplest examples of <strong>chaos</strong>.</p>
+              <p>Chaos doesn't mean random. Every swing here follows exact physics, and if you start it the same way twice, it does the same thing twice. But the smallest difference in how it starts grows and grows until the two runs have nothing to do with each other. Each pendulum here starts just 0.06° apart from the next, far less than you could ever see, and within a few seconds they're all over the place. This is the <strong>butterfly effect</strong>, and it's why the weather can't be forecast more than a couple of weeks ahead.</p>
+              <p>Try this: set Pendulums to 2 and watch them go from twins to strangers. Press Restart a few times, since every start comes apart differently. Or slide it up to 50 for a big rainbow fan.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>Each pendulum is just four numbers: the angle of each arm, and how fast each angle is changing. Six hundred times a second:</p>
+              <ol class="rules">
+                <li><strong>Work out the pull</strong> The double pendulum equations say how fast each angle's speed is changing, from gravity and from the two arms tugging on each other.</li>
+                <li><strong>Take a careful step</strong> Simply adding speed × time slowly creeps away from the real answer. So it uses RK4: check how things change at the start, middle and end of the step, and average them.</li>
+                <li><strong>Draw</strong> Turn the two angles into the positions of the two weights, and remember where the bottom one has been for its trail.</li>
+              </ol>
+              <p>There's no friction, so the pendulums should keep the energy they started with and swing forever. With RK4 they do, so closely the drift can't be measured after a minute. If they slowly sped up or calmed down, you'd know the math had drifted.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -282,8 +317,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>

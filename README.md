@@ -17,6 +17,7 @@ This is a just-for-fun project where I learn by building. It's part handwritten,
 | [Falling sand](sand/) | Pour sand and water, draw walls, and watch it all pile up and slosh around. Turn on Colorful for rainbow sand. |
 | [Chaos game](chaos-game/) | Jump halfway toward a random corner, over and over, and a fractal appears out of the noise. |
 | [Cloth](cloth/) | Pull, cut and tear a sheet of fabric made of points and little sticks. |
+| [Double pendulum](double-pendulum/) | A rainbow of pendulums start a hair apart, swing together, then fly apart. Chaos you can watch. |
 
 ## Running it locally
 
@@ -42,6 +43,7 @@ rain/
 sand/
 chaos-game/
 cloth/
+double-pendulum/
 ```
 
 Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder. The `preview.webp` inside is only for the home page.
