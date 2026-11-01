@@ -148,6 +148,9 @@ h1 {
 }
 
 .topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   font-size: 0.8125rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -292,6 +295,116 @@ h1 {
   to { transform: translateX(-50%); }
 }
 
+/* ---------- The ideas ---------- */
+.ideas {
+  padding: 1rem 0 3rem;
+}
+.ideas > h2 {
+  margin-bottom: 2.4rem;
+}
+
+.idea {
+  margin-bottom: 2.6rem;
+  background: var(--surface);
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
+/* Same header color cycle as the cards above */
+.idea:nth-of-type(3n + 2) .card-head { background: var(--a2); }
+.idea:nth-of-type(3n) .card-head { background: var(--a3); }
+
+/* The idea on the left, the "under the hood" box on the right */
+.idea-body {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem 2.6rem;
+  padding: 1.9rem 1.9rem 2.1rem;
+}
+.idea h3 {
+  font-size: 1.9rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.1rem;
+}
+.idea p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.idea strong {
+  color: var(--paper);
+}
+/* A single character shown as a little tile, like "@" */
+.glyph {
+  padding: 0 0.35em;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--muted);
+}
+
+.idea-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border: 2px solid var(--paper);
+  box-shadow: var(--shadow-sm);
+  transition: translate var(--press), box-shadow var(--press);
+}
+.idea-link:hover {
+  translate: -1px -1px;
+  box-shadow: var(--shadow);
+}
+
+.under-hood {
+  align-self: start;
+  padding: 1.3rem 1.4rem 0.4rem;
+  background: var(--ink);
+  border: 2px solid var(--paper);
+}
+.idea .hood-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+/* Numbered rules, each with its name on its own line */
+.rules {
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: rule;
+}
+.rules li {
+  position: relative;
+  margin-bottom: 0.9rem;
+  padding-left: 2.3rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--muted);
+  counter-increment: rule;
+}
+.rules li::before {
+  content: counter(rule);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  width: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--on-accent);
+  background: var(--a1);
+}
+.rules strong {
+  display: block;
+  font-family: var(--heading);
+  font-size: 1.05rem;
+}
+
 /* ---------- How it works panel ---------- */
 .how {
   display: grid;
@@ -360,5 +473,8 @@ footer {
   .marquee-track { font-size: 1rem; }
   .marquee-track span { padding-right: 1.2rem; }
   h2 { font-size: 1.9rem; }
+  .idea-body { grid-template-columns: 1fr; padding: 1.4rem 1.2rem 1.6rem; }
+  .idea h3 { font-size: 1.6rem; }
+  .under-hood { padding: 1.1rem 1.1rem 0.3rem; }
   .how { grid-template-columns: 1fr; padding: 1.8rem 1.4rem 2rem; box-shadow: var(--shadow); }
 }

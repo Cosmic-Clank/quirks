@@ -40,7 +40,8 @@ Each quirk folder stands on its own. It has its own `index.html` and its own sty
 
 1. Make a folder named after it, e.g. `sand/`, with an `index.html` inside. Put the CSS and JS in that page, or next to it as separate files, whichever reads better.
 2. On the home page (`index.html`), copy one of the `<article class="card">` blocks. Give it the next number, a label (Simulation, Toy, Tool...), a name, and a sentence or two about it.
-3. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
+3. Write up the idea behind it in the "Ideas" section further down: what makes it interesting on the left, how it works under the hood on the right.
+4. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
 
 A few rules keep things easy to read:
 

@@ -17,6 +17,7 @@
         <p class="tagline">Little simulations, toys and tools.</p>
       </div>
       <nav aria-label="Main navigation">
+        <a href="#ideas">Ideas</a>
         <a href="#how">How it works</a>
       </nav>
     </header>
@@ -68,6 +69,81 @@
   </div>
 
   <div class="page">
+    <!-- One write-up per quirk: the idea on the left, how it works on the right. -->
+    <section id="ideas" class="ideas">
+      <p class="section-tag">The ideas</p>
+      <h2>Simple rules, surprising results</h2>
+
+      <article class="idea">
+        <div class="card-head"><span class="index">01</span><span>Boids</span></div>
+        <div class="idea-body">
+          <div>
+            <h3>Three rules make a flock</h3>
+            <p>In 1986 Craig Reynolds wanted to animate a flock of birds without scripting every single bird. His trick was to not program the flock at all. Program one bird, give it three simple rules about the birds around it, and copy it a few hundred times. The flock shows up on its own. He called them boids, short for "bird-oid objects", and the same idea later flew the bat swarms in Batman Returns.</p>
+            <p>No rule says "form a flock", "split around the mouse" or "merge back together", yet that's exactly what you see. This is called emergence: complex group behaviour growing out of simple local rules, the same way real starlings and schools of fish move as one without a leader.</p>
+            <p>Play with the sliders to break it. Turn Cohesion to zero and the groups never pull together. Turn Separation to zero and they pile into tight clumps. Push Alignment up and they march in neat lines.</p>
+            <a class="idea-link" href="boids/">Play Boids →</a>
+          </div>
+          <div class="under-hood">
+            <p class="hood-label">Under the hood</p>
+            <p>Each boid only knows three things about itself: its <strong>position</strong> (x, y), its <strong>velocity</strong> (which way and how fast it's moving) and a <strong>steering</strong> nudge that builds up each frame. Every frame, it looks at its neighbours and adds up three nudges:</p>
+            <ol class="rules">
+              <li><strong>Separation</strong> Steer away from boids inside your personal space. The closer they are, the harder the push.</li>
+              <li><strong>Alignment</strong> Turn toward the average direction of the boids you can see.</li>
+              <li><strong>Cohesion</strong> Drift toward the average position of the boids you can see.</li>
+            </ol>
+            <p>The nudges are added to the velocity, the speed is reset to a fixed value, and the boid moves. Do that for every boid, every frame.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="idea">
+        <div class="card-head"><span class="index">02</span><span>ASCII video</span></div>
+        <div class="idea-body">
+          <div>
+            <h3>Pictures made of letters</h3>
+            <p>Every character on a screen is just a tiny patch of ink. An <span class="glyph">@</span> fills most of its box, a <span class="glyph">.</span> barely touches it. Line characters up from least ink to most and you get a brightness scale made out of text. Put the right character in the right spot and a picture appears, the same trick people used to make art on typewriters long before screens.</p>
+            <p>Doing it to live video is the fun part. Your camera becomes a moving wall of letters, redrawn for every frame of video, and you can still tell it's you.</p>
+            <p>Everything happens on your own device. The browser plays the video, the camera stream never leaves the page, and nothing is uploaded anywhere.</p>
+            <a class="idea-link" href="ascii-video/">Play ASCII video →</a>
+          </div>
+          <div class="under-hood">
+            <p class="hood-label">Under the hood</p>
+            <p>For every new frame of the video:</p>
+            <ol class="rules">
+              <li><strong>Shrink it</strong> Draw the frame onto a tiny hidden canvas, one pixel per character. Characters are taller than they are wide, so it gets fewer rows to keep the shape right.</li>
+              <li><strong>Measure brightness</strong> Our eyes are most sensitive to green and least to blue, so each pixel is weighted: 0.299 × red + 0.587 × green + 0.114 × blue.</li>
+              <li><strong>Pick a character</strong> Map that brightness onto the scale of characters and draw the one that matches. In color mode, it's drawn in its pixel's own color.</li>
+            </ol>
+            <p>The Detail slider sets how many characters wide the picture is, and Invert flips the scale.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="idea">
+        <div class="card-head"><span class="index">03</span><span>Game of Life</span></div>
+        <div class="idea-body">
+          <div>
+            <h3>A universe on graph paper</h3>
+            <p>In 1970 the mathematician John Conway invented a game with no players. You set up a grid of cells, each one alive or dead, and then you just watch. It's a <strong>cellular automaton</strong>: a world made of cells that all update at the same moment, each following the same rule and looking only at its closest neighbours.</p>
+            <p>The rules fit on a sticky note, yet whole ecosystems come out of them. Some patterns never change. Some blink forever. Some, called gliders, crawl across the grid like little creatures. People have since built glider guns, self-copying patterns and even working computers inside Life. It can calculate anything a real computer can, given a big enough grid.</p>
+            <p>Try this: press Clear, draw three cells in a row, and press Step a few times. Then try five cells in the shape of a glider and let it run.</p>
+            <a class="idea-link" href="game-of-life/">Play Game of Life →</a>
+          </div>
+          <div class="under-hood">
+            <p class="hood-label">Under the hood</p>
+            <p>Each turn, every cell counts how many of its 8 neighbours are alive:</p>
+            <ol class="rules">
+              <li><strong>Birth</strong> A dead cell with exactly 3 live neighbours comes alive.</li>
+              <li><strong>Survival</strong> A live cell with 2 or 3 live neighbours stays alive.</li>
+              <li><strong>Death</strong> Any other cell dies of loneliness or overcrowding, or stays dead.</li>
+            </ol>
+            <p>The grid is one long list of 0s and 1s. Every cell has to see the same "before" picture, so the next generation is written into a second list and the two swap. The edges wrap around, so a glider leaving the right side comes back on the left.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
     <section id="how" class="how">
       <div>
         <p class="section-tag">How it works</p>
