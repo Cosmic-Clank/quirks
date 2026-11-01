@@ -238,6 +238,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">07</span><span>Simulation</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="cloth/" tabindex="-1">
+              <img src="cloth/preview.webp" width="1100" height="688" alt="A blue mesh of cloth hanging from pins, with a slit cut into it and one corner being pulled out">
+            </a>
+            <div class="quirk-intro">
+              <h3>Cloth</h3>
+              <p class="subtitle">Points, sticks and a bit of patience</p>
+              <p>A sheet of fabric hanging from a few pins. Grab it and pull, let the wind blow it around, or slice through it and watch it fall apart. Pull too hard and it rips.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="cloth/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="cloth-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="cloth-more" hidden>
+            <div>
+              <p>Real cloth is woven from threads, and that's almost exactly how this one works. It's a grid of points, and each point is tied to its neighbours by a short stick. There's no cloth formula anywhere in the code. The draping, folding and swinging all come from those little sticks pulling on each other.</p>
+              <p>The trick that makes it simple is called <strong>Verlet integration</strong>. Instead of keeping track of each point's speed, you just remember where it was a moment ago. Wherever it moved last step, it keeps moving the same way. It's a favourite in games for ropes, chains, ragdolls and flags, because it's short to write and very hard to make explode.</p>
+              <p>Try this: drag one of the white pins somewhere new and let go. Turn the wind up and watch it ripple. Cut a slit up the middle and it parts like a curtain. Watch the colors as you pull: the sticks go green, then yellow, then red right before they snap.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>Every point remembers where it is now and where it was a step ago. Sixty times a second:</p>
+              <ol class="rules">
+                <li><strong>Move</strong> Each point moves as far as it did last step, plus a little gravity and wind. Pinned points stay put.</li>
+                <li><strong>Fix the sticks</strong> Each stick that got too long or too short nudges both its ends back toward its proper length. Fixing one knocks its neighbours out a little, so this runs 15 times over.</li>
+                <li><strong>Tear</strong> Any stick stretched past three times its length snaps, and is gone for good.</li>
+              </ol>
+              <p>Pulling grabs every point near your finger and moves them all together, like grabbing a handful of real fabric. Pulling a single point would put all the strain on its four sticks, and it would just rip straight out.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -247,8 +282,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>
