@@ -27,20 +27,20 @@ uv run python -m http.server
 ## How it's laid out
 
 ```
-index.html, style.css   the home page with a card for each quirk
+index.html, style.css   the home page, with a box for each quirk
 favicon.svg, fonts/      shared by the home page
 boids/                   one folder per quirk
 ascii-video/
 game-of-life/
 ```
 
-Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder.
+Each quirk folder stands on its own. It has its own `index.html` and its own styles and scripts, and it doesn't depend on or link to anything outside its folder. The `preview.webp` inside is only for the home page.
 
 ## Adding a quirk
 
 1. Make a folder named after it, e.g. `sand/`, with an `index.html` inside. Put the CSS and JS in that page, or next to it as separate files, whichever reads better.
-2. On the home page (`index.html`), copy one of the `<article class="card">` blocks. Give it the next number, a label (Simulation, Toy, Tool...), a name, and a sentence or two about it.
-3. Write up the idea behind it in the "Ideas" section further down: what makes it interesting on the left, how it works under the hood on the right.
+2. Take a screenshot of it doing something nice, at 1100 × 688, and save it in the folder as `preview.webp`.
+3. On the home page (`index.html`), copy one of the `<article class="quirk">` boxes and fill it in: the next number, a label (Simulation, Toy, Tool...), the screenshot, a name and subtitle, and a short description. Underneath goes the longer write-up that "Read more" opens: the idea and why it's interesting on the left, and how it works "under the hood" on the right. Give the write-up its own `id`, and put that id in the button's `aria-controls`.
 4. Add its name to the marquee band too. The text is written out twice, so add it to both halves.
 
 A few rules keep things easy to read:
