@@ -308,6 +308,41 @@
           </div>
         </article>
 
+        <article class="quirk">
+          <div class="card-head"><span class="index">09</span><span>Toy</span></div>
+          <div class="quirk-main">
+            <a class="quirk-shot" href="circles/" tabindex="-1">
+              <img src="circles/preview.webp" width="1100" height="688" alt="A chain of spinning circles, one riding on the next, with a yellow pen at the end halfway through tracing a hand-drawn star">
+            </a>
+            <div class="quirk-intro">
+              <h3>Drawing with circles</h3>
+              <p class="subtitle">Any shape is just circles in disguise</p>
+              <p>Draw anything in one stroke, and a chain of spinning circles works out how to draw it back. Slide the number of circles down and watch your drawing melt into smooth blobs, then sharpen again.</p>
+              <div class="quirk-actions">
+                <a class="button play" href="circles/">Play →</a>
+                <button type="button" class="button more-toggle" aria-expanded="false" aria-controls="circles-more">Read more</button>
+              </div>
+            </div>
+          </div>
+          <div class="quirk-more" id="circles-more" hidden>
+            <div>
+              <p>Put a circle on a stick and spin it. Now put a smaller circle on the edge of that one, spinning at a different speed, and another on that, and so on. The tip of the last one draws a path. The surprising part: with the right sizes and starting angles, that path can be <strong>any closed drawing you like</strong>. A star, a heart, your name in cursive.</p>
+              <p>Working out those sizes and angles is called a <strong>Fourier transform</strong>, after the mathematician Joseph Fourier, who showed in the early 1800s that complicated wiggles can be built by adding up simple waves. It's everywhere: close cousins of it shrink MP3s and JPEGs, it helps phones pick out your voice from background noise, and it's how music apps make the bars bounce along to a song.</p>
+              <p>Try this: press Heart, then slide Circles down. A heart only needs 8. Then draw a star with sharp corners and slide it down. Sharp corners need lots of tiny fast circles, so with only a few the points go round and soft.</p>
+            </div>
+            <div class="under-hood">
+              <p class="hood-label">Under the hood</p>
+              <p>Your drawing is saved as a list of points. Then:</p>
+              <ol class="rules">
+                <li><strong>Pick a speed</strong> For each whole-number speed (0, 1, &minus;1, 2, &minus;2, ...), there's one circle to find.</li>
+                <li><strong>Untwist and average</strong> Turn every point backwards by that many full turns over the course of the drawing, then average them. Everything spinning at other speeds cancels out, and what's left is this circle's size and starting angle.</li>
+                <li><strong>Stack and spin</strong> Biggest circles first. Each frame, every circle turns by its speed, sitting on the edge of the one before, and the pen at the end leaves a line.</li>
+              </ol>
+              <p>Use every circle and the pen lands exactly on every point you drew. Use fewer and you get the closest smooth version. JPEG photos use a similar trick to throw away fine detail you won't miss.</p>
+            </div>
+          </div>
+        </article>
+
       </div>
     </main>
   </div>
@@ -317,8 +352,8 @@
   <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee">
     <div class="marquee-track">
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
-      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Drawing with circles</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
+      <span>Flock simulation</span><span>*</span><span>ASCII video</span><span>*</span><span>Game of Life</span><span>*</span><span>Rain</span><span>*</span><span>Falling sand</span><span>*</span><span>Chaos game</span><span>*</span><span>Cloth</span><span>*</span><span>Double pendulum</span><span>*</span><span>Drawing with circles</span><span>*</span><span>Simulations</span><span>*</span><span>Toys</span><span>*</span><span>Tools</span><span>*</span><span>View source</span><span>*</span>
     </div>
   </div>
   </div>

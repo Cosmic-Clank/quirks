@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Drawing with Circles</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0e1117; }
+    /* touch-action: none lets a finger draw instead of scrolling the page */
+    canvas { display: block; touch-action: none; cursor: crosshair; }
+
+    /* ---- Control bar, floating at the bottom ---- */
+    .bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      max-width: 520px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 10px 12px;
+      font: 13px monospace;
+      color: #ddd;
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid #444;
+      border-radius: 6px;
+    }
+    .tip { width: 100%; margin: 0; text-align: center; color: #888; }
+    #circles-value { min-width: 4ch; font-variant-numeric: tabular-nums; }
+    button {
+      padding: 6px 12px;
+      font: inherit;
+      color: inherit;
+      background: #0e1117;
+      border: 1px solid #444;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { border-color: #888; }
+    label { display: flex; align-items: center; gap: 8px; }
+    input { width: 140px; margin: 0; accent-color: #f5c84c; }
+  </style>
+</head>
+<body>
+  <canvas id="sky"></canvas>
+
+  <div class="bar">
+    <p class="tip">Draw any shape in one stroke, and the circles will redraw it.</p>
+    <label>Circles <input type="range" id="circles" min="1" max="100" value="100"> <output id="circles-value"></output></label>
+    <button type="button" id="heart">Heart</button>
+  </div>
+
+  <script src="circles.js"></script>
+</body>
+</html>
